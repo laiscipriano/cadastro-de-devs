@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de Desenvolvedores</title>
+  <h5>Por Laís Cipriano</h5>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #462968;
+      color: #A396C8;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background-color: #462968;
+      border-radius: 10px;
+    }
+    input[type="text"], input[type="radio"] {
+      margin-bottom: 10px;
+    }
+    input[type="submit"], input[type="button"] {
+      background-color: #A396C8;
+      color: #ffffff;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    input[type="submit"]:hover, input[type="button"]:hover {
+      background-color: #4527a0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Cadastro de Desenvolvedores</h2>
+    <form id="developerForm">
+      <label for="fullName">Nome Completo:</label>
+      <input type="text" id="fullName" required>
+      <div id="technologies">
+        <div>
+          <label for="technology">Tecnologia:</label>
+          <input type="text" class="technology" required>
+          <label>
+            <input type="radio" name="experience" value="0-2 anos"> 0-2 anos
+          </label>
+          <label>
+            <input type="radio" name="experience" value="3-4 anos"> 3-4 anos
+          </label>
+          <label>
+            <input type="radio" name="experience" value="5+ anos"> + anos
+          </label>
+          <button type="button" class="removeButton">Remover</button>
+        </div>
+      </div>
+      <button type="button" id="addTechnology">Adicionar Tecnologia</button>
+      <input type="submit" value="Cadastrar">
+      
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const addTechnologyButton = document.getElementById("addTechnology");
+      const technologiesDiv = document.getElementById("technologies");
+
+      addTechnologyButton.addEventListener("click", function() {
+        const newTechnologyDiv = document.createElement("div");
+        newTechnologyDiv.innerHTML = `
+          <label for="technology">Tecnologia:</label>
+          <input type="text" class="technology" required>
+          <label>
+            <input type="radio" name="experience" value="0-2 anos"> 0-2 anos
+          </label>
+          <label>
+            <input type="radio" name="experience" value="3-4 anos"> 3-4 anos
+          </label>
+          <label>
+            <input type="radio" name="experience" value="5+ anos"> 5+ anos
+          </label>
+          <button type="button" class="removeButton">Remover</button>
+        `;
+        technologiesDiv.appendChild(newTechnologyDiv);
+      });
+
+      technologiesDiv.addEventListener("click", function(event) {
+        if (event.target.classList.contains("removeButton")) {
+          event.target.parentNode.remove();
+        }
+      });
+
+      const developerForm = document.getElementById("developerForm");
+      developerForm.addEventListener("submit", function(event) {
+        event.preventDefault();
+        const fullName = document.getElementById("fullName").value;
+        const technologies = document.querySelectorAll(".technology");
+        const experienceRadios = document.querySelectorAll("input[name='experience']:checked");
+        const experience = Array.from(experienceRadios).map(input => input.value);
+        
+        console.log("Nome Completo:", fullName);
+        technologies.forEach((tech, index) => {
+          console.log(`Tecnologia ${index + 1}:`, tech.value);
+        });
+        console.log("Experiência:", experience);
+      });
+    });
+  </script>
+</body>
+</html>
